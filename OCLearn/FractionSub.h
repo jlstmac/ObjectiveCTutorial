@@ -10,7 +10,8 @@
 
 @interface FractionSub : Fraction
 {
-    
+    //父类中已经有了a，不能重复定义
+//    int a;
 }
 
 - (void)printA;
