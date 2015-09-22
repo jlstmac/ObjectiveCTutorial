@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E92BBA521BB19A3700781A5B /* FractionSub.m in Sources */ = {isa = PBXBuildFile; fileRef = E92BBA511BB19A3700781A5B /* FractionSub.m */; };
 		E94D55391BAEC00C00811CBD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E94D55381BAEC00C00811CBD /* main.m */; };
 		E94D553C1BAEC00C00811CBD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E94D553B1BAEC00C00811CBD /* AppDelegate.m */; };
 		E94D553F1BAEC00C00811CBD /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E94D553E1BAEC00C00811CBD /* ViewController.m */; };
@@ -14,6 +15,7 @@
 		E94D55441BAEC00C00811CBD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E94D55431BAEC00C00811CBD /* Images.xcassets */; };
 		E94D55471BAEC00C00811CBD /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E94D55451BAEC00C00811CBD /* LaunchScreen.xib */; };
 		E94D55531BAEC00C00811CBD /* OCLearnTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E94D55521BAEC00C00811CBD /* OCLearnTests.m */; };
+		E94D55621BAEC11900811CBD /* Fraction.m in Sources */ = {isa = PBXBuildFile; fileRef = E94D55611BAEC11900811CBD /* Fraction.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,6 +29,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E92BBA501BB19A3700781A5B /* FractionSub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FractionSub.h; sourceTree = "<group>"; };
+		E92BBA511BB19A3700781A5B /* FractionSub.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FractionSub.m; sourceTree = "<group>"; };
 		E94D55331BAEC00C00811CBD /* OCLearn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OCLearn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E94D55371BAEC00C00811CBD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E94D55381BAEC00C00811CBD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -40,6 +44,8 @@
 		E94D554C1BAEC00C00811CBD /* OCLearnTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OCLearnTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E94D55511BAEC00C00811CBD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E94D55521BAEC00C00811CBD /* OCLearnTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OCLearnTests.m; sourceTree = "<group>"; };
+		E94D55611BAEC11900811CBD /* Fraction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Fraction.m; sourceTree = "<group>"; };
+		E94D55631BAEC12200811CBD /* Fraction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Fraction.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +95,10 @@
 				E94D55431BAEC00C00811CBD /* Images.xcassets */,
 				E94D55451BAEC00C00811CBD /* LaunchScreen.xib */,
 				E94D55361BAEC00C00811CBD /* Supporting Files */,
+				E94D55611BAEC11900811CBD /* Fraction.m */,
+				E94D55631BAEC12200811CBD /* Fraction.h */,
+				E92BBA501BB19A3700781A5B /* FractionSub.h */,
+				E92BBA511BB19A3700781A5B /* FractionSub.m */,
 			);
 			path = OCLearn;
 			sourceTree = "<group>";
@@ -222,6 +232,8 @@
 				E94D553F1BAEC00C00811CBD /* ViewController.m in Sources */,
 				E94D553C1BAEC00C00811CBD /* AppDelegate.m in Sources */,
 				E94D55391BAEC00C00811CBD /* main.m in Sources */,
+				E92BBA521BB19A3700781A5B /* FractionSub.m in Sources */,
+				E94D55621BAEC11900811CBD /* Fraction.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -414,6 +426,7 @@
 				E94D55581BAEC00C00811CBD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E94D55591BAEC00C00811CBD /* Build configuration list for PBXNativeTarget "OCLearnTests" */ = {
 			isa = XCConfigurationList;
@@ -422,6 +435,7 @@
 				E94D555B1BAEC00C00811CBD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
