@@ -21,6 +21,11 @@
 
 - (void) setA:(int)value;
 
+//一个类中不能同时存在两个相同函数名的函数（即使参数不同也不行）
+//因为方法是按方法名生成一个SEL。SEL是一个int型的地址
+//OC不支持函数重载
+//- (void) setA:(NSString*)value;
+
 @end
 
 #endif
