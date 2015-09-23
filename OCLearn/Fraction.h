@@ -16,6 +16,9 @@
     int a;
 }
 
+//属性，property
+@property (nonatomic,retain) NSString* myName;
+
 - (void) setA:(int)value;
 
 @end
