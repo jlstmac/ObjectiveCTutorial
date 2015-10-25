@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "FractionSub.h"
+#import "Fraction.h"
 
 @interface AppDelegate ()
 
@@ -22,6 +23,13 @@
     [sub setA:100];
     [sub printA];
 
+    //这样写，编译时并不会报错，但是运行时却会崩溃
+    //因为，Fraction类中并没有定义printA方法
+    //编译时并不知道存储在fc中的对象类型就是Fraction,只有在运行时才会去检查fc中的对象类型是Fraction
+    /*
+    id fc= [[Fraction alloc] init];
+    [fc printA];
+     */
     
     
     
