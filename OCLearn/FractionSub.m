@@ -17,4 +17,8 @@
 - (void)setA:(int)value{    
     a = value >= 100 ? 2 : value;
 }
+
+- (void)son{
+    NSLog(@"Son class");
+}
 @end

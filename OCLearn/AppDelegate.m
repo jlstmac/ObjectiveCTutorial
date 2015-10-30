@@ -22,9 +22,49 @@
     [sub setA:100];
     [sub printA];
 
+
+    Fraction* ft = [[Fraction alloc] init];
+    ft.myName = @"newname";
     
+    for (int i = 0; i < 10; i++) {
+        NSLog(@"%d",i);
+    }
     
+    //isKindOfClass:检测对象是不是该类或者该类的子类的对象
+    //检测方式是坚持该类或者该类的父类的class是否＝＝isa
+    bool result1 = [sub isKindOfClass:[Fraction class]];
+    NSLog(@"re:%d",result1);
     
+    //isMemberOfClass:检测对象是不是该类的对象
+    //检测方式是坚持该类class是否＝＝isa
+    bool result2 = [sub isMemberOfClass:[Fraction class]];
+    NSLog(@"re:%d",result2);
+
+    //respondsToSelector:检测对象是否有以这个名字命名的方法
+    bool result3 = [ft respondsToSelector:@selector(father)];
+    //instancesRespondToSelector:检测类是否含有以这个名字命名的方法
+    bool result4 = [Fraction instancesRespondToSelector:@selector(son)];
+
+//    [ft father];
+    
+    //为方法生产一个SEL
+    SEL selector = @selector(father);
+    //生成father方法的签名
+//    NSMethodSignature* signture = [Fraction instanceMethodSignatureForSelector:selector];
+    NSMethodSignature* signture = [ft methodSignatureForSelector:selector];
+    //生成Invocation
+    NSInvocation* inv = [NSInvocation invocationWithMethodSignature:signture];
+//    [[ft performSelectorInBackground:<#(SEL)#> withObject:<#(id)#>]
+//    [[NSMethodSignature methodSignatureForSelector:@selector()]
+    [inv setSelector:selector];
+    [inv setTarget:ft];
+//    NSTimer* timer = [NSTimer scheduledTimerWithTimeInterval:0.0f invocation:inv repeats:NO];
+    NSTimer* timer = [NSTimer timerWithTimeInterval:1.0f invocation:inv repeats:YES];
+    [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+    [timer fire];
+    [timer invalidate];
+    
+    [FractionSub doProtocol2];
     return YES;
 }
 

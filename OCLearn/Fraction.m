@@ -30,4 +30,12 @@
     return self;
 }
 
+- (void)father{
+    NSLog(@"Father class");
+}
+
++ (void)doProtocol2{
+    NSLog(@"myProtocol2 function");
+}
+
 @end

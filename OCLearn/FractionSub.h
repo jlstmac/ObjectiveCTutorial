@@ -16,6 +16,8 @@
 
 - (void)printA;
 
-//- (void)setA:(int)value;
+- (void)setA:(int)value;
+
+- (void)son;
 
 @end
