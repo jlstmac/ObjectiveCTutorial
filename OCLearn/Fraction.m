@@ -38,4 +38,14 @@
     NSLog(@"myProtocol2 function");
 }
 
+- (id)initReturnID{
+    self = [super init];
+    return self;
+}
+
+- (instancetype)initReturnInstancetype{
+    self = [super init];
+    return self;
+}
+
 @end

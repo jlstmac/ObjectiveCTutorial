@@ -21,4 +21,15 @@
 - (void)son{
     NSLog(@"Son class");
 }
+
+- (id)initReturnID{
+    self = [super init];
+    return self;
+}
+
+- (instancetype)initReturnInstancetype{
+    self = [super init];
+    return self;
+}
+
 @end

@@ -43,6 +43,10 @@
 //属性，property
 @property (nonatomic,retain) NSString* myName;
 
+- (id)initReturnID;
+
+- (instancetype)initReturnInstancetype;
+
 - (void) setA:(int)value;
 
 - (void) father;

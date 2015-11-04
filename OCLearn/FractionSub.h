@@ -20,4 +20,8 @@
 
 - (void)son;
 
+- (id)initReturnID;
+
+- (instancetype)initReturnInstancetype;
+
 @end

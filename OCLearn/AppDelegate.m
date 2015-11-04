@@ -72,6 +72,16 @@
     [timer invalidate];
     
     [FractionSub doProtocol2];
+    
+    id ftf = [[Fraction alloc] initReturnID];
+    //编译器并没有报错，但是运行时会崩溃。因为它是id类型
+    //[ftf son];
+    //但是这种情况也会报错，因为这个时候编译器把id类型转换成了instancetype类型
+//    [[[Fraction alloc] initReturnID] son];
+    
+    //编译器会报错，因为编译知道[[Fraction alloc] initReturnInstancetype]返回的实例是属于Fraction对象
+//    [[[Fraction alloc] initReturnInstancetype] son];
+    
     return YES;
 }
 
