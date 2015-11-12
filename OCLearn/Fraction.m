@@ -38,4 +38,12 @@
     NSLog(@"myProtocol2 function");
 }
 
+- (instancetype)initWithValue:(int)value{
+    self = [super init];
+    if (self) {
+        privateVar = value;
+    }
+    return self;
+}
+
 @end

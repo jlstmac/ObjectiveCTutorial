@@ -26,6 +26,11 @@
     Fraction* ft = [[Fraction alloc] init];
     ft.myName = @"newname";
     
+    Fraction* ft2 = [[Fraction alloc] initWithValue:2];
+    id ft3 = [[Fraction alloc] init];
+    [ft2 noFunc];
+    [ft3 noFunc];
+    
     for (int i = 0; i < 10; i++) {
         NSLog(@"%d",i);
     }
