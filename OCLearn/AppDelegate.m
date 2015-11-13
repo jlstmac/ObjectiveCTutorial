@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "FractionSub.h"
 #import "Fraction.h"
+#import "PropertyLearn.h"
 
 @interface AppDelegate ()
 
@@ -28,8 +29,8 @@
     
     Fraction* ft2 = [[Fraction alloc] initWithValue:2];
     id ft3 = [[Fraction alloc] init];
-    [ft2 noFunc];
-    [ft3 noFunc];
+//    [ft2 noFunc];
+//    [ft3 noFunc];
     
     for (int i = 0; i < 10; i++) {
         NSLog(@"%d",i);
@@ -87,7 +88,13 @@
     //编译器会报错，因为编译知道[[Fraction alloc] initReturnInstancetype]返回的实例是属于Fraction对象
 //    [[[Fraction alloc] initReturnInstancetype] son];
     
+    [self property];
+    
     return YES;
+}
+
+- (void)property{
+    [[PropertyLearn alloc] initWitTest];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
