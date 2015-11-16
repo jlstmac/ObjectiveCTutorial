@@ -10,6 +10,7 @@
 #import "FractionSub.h"
 #import "Fraction.h"
 #import "PropertyLearn.h"
+#import "Fraction+CategoryLearn.h"
 
 @interface AppDelegate ()
 
@@ -90,11 +91,19 @@
     
     [self property];
     
+    [self category];
+    
     return YES;
 }
 
 - (void)property{
     [[PropertyLearn alloc] initWitTest];
+}
+
+- (void)category{
+    //需要import进 Fraction+CategoryLearn.h才能正确编译
+    [[[Fraction alloc] init] printCategory];
+    [[[FractionSub alloc] init] printCategory];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

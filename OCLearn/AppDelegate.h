@@ -14,5 +14,7 @@
 
 - (void) property;
 
+- (void) category;
+
 @end
 
