@@ -10,6 +10,8 @@
 #import "FractionSub.h"
 #import "Fraction.h"
 #import "PropertyLearn.h"
+//#import "Fraction+CategoryA.h"
+//#import "Fraction+CategoryTest.h"
 #import "Fraction+CategoryLearn.h"
 
 @interface AppDelegate ()
@@ -102,8 +104,10 @@
 
 - (void)category{
     //需要import进 Fraction+CategoryLearn.h才能正确编译
+    NSLog(@"category start func:%@",NSStringFromSelector(_cmd));
     [[[Fraction alloc] init] printCategory];
     [[[FractionSub alloc] init] printCategory];
+
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
