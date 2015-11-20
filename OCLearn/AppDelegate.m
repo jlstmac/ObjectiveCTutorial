@@ -95,6 +95,18 @@
     
     [self category];
     
+    [self array];
+    
+    [self stringTest];
+    
+    [self copyTest];
+    
+    [self deapCopy];
+    
+    [self arraySort];
+    
+    [self blockTest];
+    
     return YES;
 }
 
@@ -108,6 +120,159 @@
     [[[Fraction alloc] init] printCategory];
     [[[FractionSub alloc] init] printCategory];
 
+}
+
+- (void)array{
+    NSLog(@"array start:%@",NSStringFromSelector(_cmd));
+    //NSArray是不可变的，不能插入或者删除
+    //NSMutableArray是可变的，可以插入或者删除
+    NSArray* arr = [[NSArray alloc] initWithObjects:@"Hellow",@"world",@"!", nil];
+    [self traverseArray:arr];
+    
+    NSMutableArray* mutarr = [[NSMutableArray alloc] initWithObjects:@"What", @"a", @"fucking", @"day", nil];
+
+    [mutarr insertObject:@"!" atIndex:4];
+    [mutarr removeObject:@"day" inRange:NSMakeRange(0, 3)];
+    for (int i = 0; i < [mutarr count]; i++) {
+        NSLog(@"arr:%@",[mutarr objectAtIndex:i]);
+    }
+    
+}
+
+- (void)traverseArray:(NSArray *)arr{
+    NSLog(@"current func:%@",NSStringFromSelector(_cmd));
+    NSEnumerator* enumerator = [arr objectEnumerator];
+    id obj;
+    while (obj = [enumerator nextObject]) {
+        NSLog(@"arrObject:%@",obj);
+    }
+}
+
+- (void)stringTest{
+    NSLog(@"current func:%@",NSStringFromSelector(_cmd));
+
+    unichar data[5] = {'a','b','c','d','e'};
+    NSString* str = [[NSString alloc] initWithCharacters:data length:sizeof(data)/sizeof(data[0])];
+    NSLog(@"str:%@",str);
+    
+    char* hello = "hello world!";
+    NSString* str2 = [[NSString alloc] initWithUTF8String:hello];
+    NSLog(@"str2:%@",str2);
+    
+    NSString* sub = [str2 substringWithRange:NSMakeRange(2, 3)];
+    NSLog(@"sub:%@",sub);
+    
+    char* buffer;
+    [str2 getCharacters:buffer range:NSMakeRange(2, 3)];
+    NSLog(@"buffer:%s",buffer);
+    
+
+    NSString* str3 = [str2 stringByAppendingString:str];
+    NSLog(@"str3:%@",str3);
+
+    NSRange range = [str3 rangeOfString:@"world"];
+    NSLog(@"range:%ld,range:%ld",range.location,range.length);
+    
+    //全部大写
+    NSString* upStr = [str3 uppercaseString];
+    NSLog(@"upStr:%@",upStr);
+    
+    //全部小写
+    NSString* lowStr = [str3 lowercaseString];
+    NSLog(@"lowStr:%@",lowStr);
+
+    //每个单词的首字母大写
+    NSString* cpStr = [str3 capitalizedString];
+    NSLog(@"cpStr:%@",cpStr);
+
+}
+
+- (void) copyTest{
+    //使用copy后都变成了不可变的
+    //使用mutableCopy后都变成了可变的
+    
+    NSLog(@"current func:%@",NSStringFromSelector(_cmd));
+    NSString* str = @"unmutable string";
+    NSMutableString* mutStr = [[NSMutableString alloc] initWithString:@"mutable string"];
+    
+    NSMutableString* strmc = [str mutableCopy];
+    [ strmc appendString:@"append"];
+    //运行到这里会报错，因为copy后变成了不可变的，不能appendString
+//    [[mutStr copy] appendString:@"append"];
+    NSLog(@"strmc:%@",strmc);
+    NSLog(@"mutStr:%@",mutStr);
+    
+    NSString* strc = [mutStr copy];
+    NSLog(@"strc:%@",strc);
+}
+
+- (void) deapCopy{
+    NSString* str = @"imutable";
+    NSMutableArray* mustr = [[NSMutableString alloc] initWithString:@"mutable"];
+    
+    //strc和str的地址是一样的，浅拷贝
+    //除了对不可变的变量进行不可变的拷贝（copy）是浅拷贝，其它都是深拷贝
+    NSString* strc = [str copy];
+}
+
+NSInteger compareFunc(id obj1, id obj2, void* context){
+    int v1 = [obj1 intValue];
+    int v2 = [obj2 intValue];
+    
+    if(v1 < v2){
+        return NSOrderedAscending;
+    }else if (v1 > v2){
+        return NSOrderedDescending;
+    }else{
+        return NSOrderedSame;
+    }
+}
+
+
+- (void) arraySort{
+    NSArray* arr = [[NSArray alloc] initWithObjects:
+                    [NSNumber numberWithInt:2],
+                    [NSNumber numberWithInt:1],
+                    [NSNumber numberWithInt:3],
+                    [NSNumber numberWithInt:0],
+                    nil];
+    NSArray* sortedArr = [arr sortedArrayUsingFunction:compareFunc context:nil];
+    
+    NSArray* sortedArr2 =  [arr sortedArrayUsingSelector:@selector(compare:)];
+    
+    NSLog(@"arrnum: \n%@\n",sortedArr);
+    NSLog(@"arrnum: \n%@\n",sortedArr2);
+    
+    for(id obj in arr)
+    {
+        NSLog(@"num:%@",obj);
+    }
+}
+
+- (void)blockTest{
+    NSLog(@"current func:%@",NSStringFromSelector(_cmd));
+    NSInteger value= 4;
+    __block NSInteger blockValue = 10;
+    
+    void (^blocktest)(void) = ^{
+        //会报错，value在block内视为const
+        //value = 6;
+        NSLog(@"int:%ld",(long)value);
+        
+        //不会报错，因为有__block前缀,block块内可以改变值
+        if(blockValue == 10){
+            blockValue = 11;
+        }
+        NSLog(@"block int:%ld",(long)blockValue);
+    };
+    value = 5;
+    
+    //invoke this block:blocktest
+    //block中捕获的外界变量可以看作是const的，因此输出的是4而不是5。
+    blocktest();
+    
+    blockValue = 12;
+    blocktest();
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
