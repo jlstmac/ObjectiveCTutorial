@@ -14,5 +14,20 @@
 
 - (void) property;
 
+- (void) category;
+
+- (void) array;
+
+- (void) traverseArray:(NSArray*)arr;
+
+- (void) stringTest;
+
+- (void) copyTest;
+
+- (void) deapCopy;
+
+- (void) arraySort;
+
+- (void) blockTest;
 @end
 
