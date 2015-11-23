@@ -29,5 +29,7 @@
 - (void) arraySort;
 
 - (void) blockTest;
+
+- (void) runtime;
 @end
 

@@ -13,6 +13,7 @@
 //#import "Fraction+CategoryA.h"
 //#import "Fraction+CategoryTest.h"
 #import "Fraction+CategoryLearn.h"
+#include <objc/runtime.h>
 
 @interface AppDelegate ()
 
@@ -106,6 +107,8 @@
     [self arraySort];
     
     [self blockTest];
+    
+    [self runtime];
     
     return YES;
 }
@@ -274,6 +277,26 @@ NSInteger compareFunc(id obj1, id obj2, void* context){
     blockValue = 12;
     blocktest();
 }
+
+- (void)runtime{
+    NSString* myStr = @"string";
+    const char* key = "key";
+    NSArray* arr = [[NSArray alloc] initWithObjects:@"hello", @"world", @"!", nil
+                    ];
+    
+    //设置关联变量
+    objc_setAssociatedObject(arr,key,myStr,OBJC_ASSOCIATION_RETAIN);
+    
+    //获取关联变量
+    NSLog(@"my associatedobjct:%@",objc_getAssociatedObject(arr, key));
+    
+    //取消该关联变量，置空
+    objc_setAssociatedObject(arr, key, nil, OBJC_ASSOCIATION_RETAIN);
+    
+    //取消全部关联变量
+    objc_removeAssociatedObjects(arr);
+}
+
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
