@@ -110,6 +110,8 @@
     
     [self runtime];
     
+    [self compile];
+    
     return YES;
 }
 
@@ -252,10 +254,12 @@ NSInteger compareFunc(id obj1, id obj2, void* context){
     }
 }
 
+int global_value = 7;
 - (void)blockTest{
     NSLog(@"current func:%@",NSStringFromSelector(_cmd));
     NSInteger value= 4;
     __block NSInteger blockValue = 10;
+    static int static_value = 6;
     
     void (^blocktest)(void) = ^{
         //会报错，value在block内视为const
@@ -266,6 +270,11 @@ NSInteger compareFunc(id obj1, id obj2, void* context){
         if(blockValue == 10){
             blockValue = 11;
         }
+        
+        //对于全局变量，或者静态变量或者全局静态变量，block里是可以正常使用的
+        global_value += 1;
+        static_value += 1;
+        
         NSLog(@"block int:%ld",(long)blockValue);
     };
     value = 5;
@@ -295,8 +304,19 @@ NSInteger compareFunc(id obj1, id obj2, void* context){
     
     //取消全部关联变量
     objc_removeAssociatedObjects(arr);
+    
 }
 
+- (void)compile{
+    //Fraction* fc = [[Fraction alloc] init];
+    //[fc setA:10];
+    
+    //编译器把oc代码转换成c语言后：
+    Fraction* fc = objc_msgSend(objc_getClass("Fraction"),sel_registerName("alloc"));
+    fc = objc_msgSend(fc,sel_registerName("init"));
+    
+    objc_msgSend(fc,sel_registerName("setA:"),10);
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

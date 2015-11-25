@@ -31,5 +31,7 @@
 - (void) blockTest;
 
 - (void) runtime;
+
+- (void) compile;
 @end
 
