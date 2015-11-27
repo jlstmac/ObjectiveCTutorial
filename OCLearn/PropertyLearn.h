@@ -15,6 +15,10 @@
 
 @property (assign) NSString* asStr;
 @property (retain,strong) NSString* reStr;
+@property (strong,atomic) NSString* atomicStr;
+@property (strong,nonatomic) NSString* nonatomicStr;
 -(instancetype) initWitTest;
+
+-(void) setStr:(NSString*)str;
 
 @end

@@ -26,4 +26,13 @@
     return self;
 }
 
+//atomic的实现
+-(void)setStr:(NSString *)str{
+    @synchronized(self){
+        if (nasStr != str) {
+            nasStr = str;
+        }
+    }
+}
+
 @end
