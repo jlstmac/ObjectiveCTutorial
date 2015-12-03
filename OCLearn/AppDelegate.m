@@ -13,7 +13,8 @@
 //#import "Fraction+CategoryA.h"
 //#import "Fraction+CategoryTest.h"
 #import "Fraction+CategoryLearn.h"
-#include <objc/runtime.h>
+#import <objc/runtime.h>
+extern uintptr_t  _objc_rootRetainCount(id obj);
 
 @interface AppDelegate ()
 
@@ -112,6 +113,12 @@
     
     [self compile];
     
+    [self arcLearn];
+    
+    [self gcdLearn];
+//    _objc_autoreleasePoolPrint();
+    
+    
     return YES;
 }
 
@@ -189,6 +196,7 @@
     //每个单词的首字母大写
     NSString* cpStr = [str3 capitalizedString];
     NSLog(@"cpStr:%@",cpStr);
+    
 
 }
 
@@ -316,6 +324,61 @@ int global_value = 7;
     fc = objc_msgSend(fc,sel_registerName("init"));
     
     objc_msgSend(fc,sel_registerName("setA:"),10);
+}
+
+- (void)arcLearn{
+    id __strong fc = [[Fraction alloc] init];
+    NSLog(@"retain count:%lu",_objc_rootRetainCount(fc));
+    
+//    extern void _objc_autoreleasePoolPrint();
+//    _objc_autoreleasePoolPrint();
+    @autoreleasepool {
+        id __autoreleasing obj = fc;
+        NSLog(@"retain count:%lu",_objc_rootRetainCount(fc));
+
+    }
+    NSLog(@"retain count:%lu",_objc_rootRetainCount(fc));
+
+}
+
+- (void)gcdLearn{
+    //create a Serial Dispatch Queue
+    dispatch_queue_t mySerialDispatchQueue = dispatch_queue_create("com.oclearn.gcd.mySerialDiapatchQueue", NULL);
+    
+    //create a Concurrent Dispatch Queue
+    dispatch_queue_t myConcurrentDispatchQueue = dispatch_queue_create("com.oclearn.gcd.myConcurrentDispatchQueue", DISPATCH_QUEUE_CONCURRENT);
+    
+    dispatch_async(mySerialDispatchQueue, ^{
+        NSLog(@"mySerialDispatchQueue_block_1");
+    });
+    
+    dispatch_async(mySerialDispatchQueue, ^{
+        NSLog(@"mySerialDispatchQueue_block_2");
+    });
+    
+    dispatch_async(myConcurrentDispatchQueue, ^{
+        NSLog(@"myConcurrentQueue_block_1");
+        NSLog(@"myConcurrentQueue_block_1_end");
+
+    });
+    
+    dispatch_async(mySerialDispatchQueue, ^{
+        NSLog(@"myConcurrentQueue_block_2");
+        NSLog(@"myConcurrentQueue_block_2_end");
+
+    });
+    
+    dispatch_async(myConcurrentDispatchQueue, ^{
+        NSLog(@"myConcurrentQueue_block_3");
+        NSLog(@"myConcurrentQueue_block_3_end");
+
+    });
+    
+    dispatch_async(mySerialDispatchQueue, ^{
+        NSLog(@"myConcurrentQueue_block_4");
+        NSLog(@"myConcurrentQueue_block_4_end");
+
+    });
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

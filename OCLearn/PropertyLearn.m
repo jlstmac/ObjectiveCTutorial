@@ -18,7 +18,7 @@
         self.asStr = nasStr;
         NSLog(@"asStr:%@",self.asStr);
         nasStr = [NSString stringWithUTF8String:"hehe"];
-        NSLog(@"asStr:%@",self.asStr);
+//        NSLog(@"asStr:%@",self.asStr);
         NSLog(@"nasStr:%@",nasStr);
         
 
@@ -32,6 +32,9 @@
         if (nasStr != str) {
             nasStr = str;
         }
+    }
+    @autoreleasepool {
+        id __autoreleasing it = [[NSObject alloc] init];
     }
 }
 

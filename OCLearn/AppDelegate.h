@@ -33,5 +33,9 @@
 - (void) runtime;
 
 - (void) compile;
+
+- (void) arcLearn;
+
+- (void) gcdLearn;
 @end
 
