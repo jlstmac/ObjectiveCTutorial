@@ -379,6 +379,10 @@ int global_value = 7;
         NSLog(@"myConcurrentQueue_block_4_end");
 
     });
+
+    //ios6.0及以后GCB的对象也被纳入ARC管理范围了，所以不需要手动（dispatch_retain和dispatch_release）
+//    dispatch_release(mySerialDispatchQueue);
+//    dispatch_release(myConcurrentDispatchQueue);
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
