@@ -29,5 +29,13 @@
 - (void) arraySort;
 
 - (void) blockTest;
+
+- (void) runtime;
+
+- (void) compile;
+
+- (void) arcLearn;
+
+- (void) gcdLearn;
 @end
 

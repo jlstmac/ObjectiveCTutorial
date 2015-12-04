@@ -13,6 +13,8 @@
 //#import "Fraction+CategoryA.h"
 //#import "Fraction+CategoryTest.h"
 #import "Fraction+CategoryLearn.h"
+#import <objc/runtime.h>
+extern uintptr_t  _objc_rootRetainCount(id obj);
 
 @interface AppDelegate ()
 
@@ -107,6 +109,16 @@
     
     [self blockTest];
     
+    [self runtime];
+    
+    [self compile];
+    
+    [self arcLearn];
+    
+    [self gcdLearn];
+//    _objc_autoreleasePoolPrint();
+    
+    
     return YES;
 }
 
@@ -184,6 +196,7 @@
     //每个单词的首字母大写
     NSString* cpStr = [str3 capitalizedString];
     NSLog(@"cpStr:%@",cpStr);
+    
 
 }
 
@@ -249,10 +262,12 @@ NSInteger compareFunc(id obj1, id obj2, void* context){
     }
 }
 
+int global_value = 7;
 - (void)blockTest{
     NSLog(@"current func:%@",NSStringFromSelector(_cmd));
     NSInteger value= 4;
     __block NSInteger blockValue = 10;
+    static int static_value = 6;
     
     void (^blocktest)(void) = ^{
         //会报错，value在block内视为const
@@ -263,6 +278,11 @@ NSInteger compareFunc(id obj1, id obj2, void* context){
         if(blockValue == 10){
             blockValue = 11;
         }
+        
+        //对于全局变量，或者静态变量或者全局静态变量，block里是可以正常使用的
+        global_value += 1;
+        static_value += 1;
+        
         NSLog(@"block int:%ld",(long)blockValue);
     };
     value = 5;
@@ -273,6 +293,96 @@ NSInteger compareFunc(id obj1, id obj2, void* context){
     
     blockValue = 12;
     blocktest();
+}
+
+- (void)runtime{
+    NSString* myStr = @"string";
+    const char* key = "key";
+    NSArray* arr = [[NSArray alloc] initWithObjects:@"hello", @"world", @"!", nil
+                    ];
+    
+    //设置关联变量
+    objc_setAssociatedObject(arr,key,myStr,OBJC_ASSOCIATION_RETAIN);
+    
+    //获取关联变量
+    NSLog(@"my associatedobjct:%@",objc_getAssociatedObject(arr, key));
+    
+    //取消该关联变量，置空
+    objc_setAssociatedObject(arr, key, nil, OBJC_ASSOCIATION_RETAIN);
+    
+    //取消全部关联变量
+    objc_removeAssociatedObjects(arr);
+    
+}
+
+- (void)compile{
+    //Fraction* fc = [[Fraction alloc] init];
+    //[fc setA:10];
+    
+    //编译器把oc代码转换成c语言后：
+    Fraction* fc = objc_msgSend(objc_getClass("Fraction"),sel_registerName("alloc"));
+    fc = objc_msgSend(fc,sel_registerName("init"));
+    
+    objc_msgSend(fc,sel_registerName("setA:"),10);
+}
+
+- (void)arcLearn{
+    id __strong fc = [[Fraction alloc] init];
+    NSLog(@"retain count:%lu",_objc_rootRetainCount(fc));
+    
+//    extern void _objc_autoreleasePoolPrint();
+//    _objc_autoreleasePoolPrint();
+    @autoreleasepool {
+        id __autoreleasing obj = fc;
+        NSLog(@"retain count:%lu",_objc_rootRetainCount(fc));
+
+    }
+    NSLog(@"retain count:%lu",_objc_rootRetainCount(fc));
+
+}
+
+- (void)gcdLearn{
+    //create a Serial Dispatch Queue
+    dispatch_queue_t mySerialDispatchQueue = dispatch_queue_create("com.oclearn.gcd.mySerialDiapatchQueue", NULL);
+    
+    //create a Concurrent Dispatch Queue
+    dispatch_queue_t myConcurrentDispatchQueue = dispatch_queue_create("com.oclearn.gcd.myConcurrentDispatchQueue", DISPATCH_QUEUE_CONCURRENT);
+    
+    dispatch_async(mySerialDispatchQueue, ^{
+        NSLog(@"mySerialDispatchQueue_block_1");
+    });
+    
+    dispatch_async(mySerialDispatchQueue, ^{
+        NSLog(@"mySerialDispatchQueue_block_2");
+    });
+    
+    dispatch_async(myConcurrentDispatchQueue, ^{
+        NSLog(@"myConcurrentQueue_block_1");
+        NSLog(@"myConcurrentQueue_block_1_end");
+
+    });
+    
+    dispatch_async(mySerialDispatchQueue, ^{
+        NSLog(@"myConcurrentQueue_block_2");
+        NSLog(@"myConcurrentQueue_block_2_end");
+
+    });
+    
+    dispatch_async(myConcurrentDispatchQueue, ^{
+        NSLog(@"myConcurrentQueue_block_3");
+        NSLog(@"myConcurrentQueue_block_3_end");
+
+    });
+    
+    dispatch_async(mySerialDispatchQueue, ^{
+        NSLog(@"myConcurrentQueue_block_4");
+        NSLog(@"myConcurrentQueue_block_4_end");
+
+    });
+
+    //ios6.0及以后GCB的对象也被纳入ARC管理范围了，所以不需要手动（dispatch_retain和dispatch_release）
+//    dispatch_release(mySerialDispatchQueue);
+//    dispatch_release(myConcurrentDispatchQueue);
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

@@ -18,12 +18,24 @@
         self.asStr = nasStr;
         NSLog(@"asStr:%@",self.asStr);
         nasStr = [NSString stringWithUTF8String:"hehe"];
-        NSLog(@"asStr:%@",self.asStr);
+//        NSLog(@"asStr:%@",self.asStr);
         NSLog(@"nasStr:%@",nasStr);
         
 
     }
     return self;
+}
+
+//atomic的实现
+-(void)setStr:(NSString *)str{
+    @synchronized(self){
+        if (nasStr != str) {
+            nasStr = str;
+        }
+    }
+    @autoreleasepool {
+        id __autoreleasing it = [[NSObject alloc] init];
+    }
 }
 
 @end

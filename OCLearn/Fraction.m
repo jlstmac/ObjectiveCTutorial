@@ -13,6 +13,7 @@
 
 - (void)setA:(int)value{
     a = value;
+    NSLog(@"value:%d",value);
 }
 
 - (void)resetA{
